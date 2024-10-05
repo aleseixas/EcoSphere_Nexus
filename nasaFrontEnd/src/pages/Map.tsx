@@ -6,9 +6,9 @@ const geoUrl =
 export default function MapChart() {
   return (
     <ComposableMap>
-      <Geographies geography={geoUrl}>
-        {({ geographies: any }) =>
-          Geographies.map((geo) => (
+      <Geographies geography="/features.json">
+        {({ geographies }) =>
+          geographies.map((geo) => (
             <Geography key={geo.rsmKey} geography={geo} />
           ))
         }
