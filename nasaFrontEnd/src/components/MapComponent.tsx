@@ -1,6 +1,6 @@
 // src/MapComponent.tsx
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
 import shp from 'shpjs';  // Importando a biblioteca shp.js
 
@@ -16,6 +16,7 @@ const biomesData = [
 const MapComponent: React.FC = () => {
   const brazilCenter: LatLngExpression = [-14.235004, -51.92528]; // Coordenadas aproximadas do centro do Brasil
   const [biomes, setBiomes] = useState<any[]>([]);  // Estado para armazenar os dados GeoJSON dos biomas
+  const [otherCountriesGeoJson, setOtherCountriesGeoJson] = useState<any>(null); // Estado para armazenar GeoJSON dos outros países
 
   // Função para carregar os arquivos .zip dos biomas e converter para GeoJSON
   useEffect(() => {
@@ -31,11 +32,19 @@ const MapComponent: React.FC = () => {
       setBiomes(loadedBiomes);  // Armazena os dados GeoJSON no estado
     };
 
-    loadBiomes();  // Carrega os biomas ao montar o componente
+    // Carregar GeoJSON de todos os outros países (exceto Brasil)
+    const loadOtherCountries = async () => {
+      const response = await fetch('/countries.geo.json');  // Caminho para o GeoJSON dos países
+      const geojson = await response.json();  // Converte o arquivo para JSON
+      setOtherCountriesGeoJson(geojson);  // Armazena os dados no estado
+    };
+
+    loadBiomes();  // Carrega os biomas
+    loadOtherCountries();  // Carrega os outros países
   }, []);
 
   // Função para aplicar estilos ao GeoJSON de cada bioma
-  const styleFeature = (feature: any, biomeColor: string) => {
+  const styleBiomeFeature = (biomeColor: string) => {
     return {
       fillColor: `url(#gradient-${biomeColor})`,  // Gradiente aplicado ao preenchimento
       color: biomeColor,                        // Cor da borda
@@ -45,7 +54,7 @@ const MapComponent: React.FC = () => {
   };
 
   // Função para exibir o nome do bioma no hover
-  const onEachFeature = (biomeName: string) => (feature: any, layer: any) => {
+  const onEachBiomeFeature = (biomeName: string) => (feature: any, layer: any) => {
     layer.bindPopup(`<strong>${biomeName}</strong>`);
     layer.on({
       mouseover: (e) => {
@@ -65,6 +74,16 @@ const MapComponent: React.FC = () => {
     });
   };
 
+  // Função para aplicar estilos ao GeoJSON dos outros países (cor sólida cinza)
+  const styleOtherCountries = () => {
+    return {
+      fillColor: 'lightgray',  // Cor sólida cinza para os outros países
+      color: 'gray',           // Borda cinza
+      weight: 1,               // Espessura da borda
+      fillOpacity: 0.5,        // Transparência do preenchimento
+    };
+  };
+
   return (
     <MapContainer
       center={brazilCenter}  // Centraliza o mapa no Brasil
@@ -81,7 +100,7 @@ const MapComponent: React.FC = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
 
-      {/* Definição dos gradientes para cada cor */}
+      {/* Definição dos gradientes para biomas */}
       <svg>
         {biomesData.map((biome) => (
           <defs key={biome.color}>
@@ -98,10 +117,18 @@ const MapComponent: React.FC = () => {
         <GeoJSON
           key={biome.name}
           data={biome.geojson}
-          style={() => styleFeature(null, biome.color)}
-          onEachFeature={onEachFeature(biome.name)}
+          style={() => styleBiomeFeature(biome.color)}
+          onEachFeature={onEachBiomeFeature(biome.name)}
         />
       ))}
+
+      {/* Renderiza o resto dos países com cor sólida cinza */}
+      {otherCountriesGeoJson && (
+        <GeoJSON
+          data={otherCountriesGeoJson}
+          style={styleOtherCountries}
+        />
+      )}
     </MapContainer>
   );
 };
