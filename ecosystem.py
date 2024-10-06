@@ -1,4 +1,6 @@
 import json
+configFilePath = "config.json"
+ecosystemsFilePath = "ecosystems.json"
     
 class EcoSystem:
     
@@ -54,7 +56,8 @@ class EcoSystem:
         if 0.0 <= biodiversity <= 1.0:
             self._bio = biodiversity
         else:
-            raise ValueError("Biodiversity must be between 0 and 1.")
+            #raise ValueError("Biodiversity must be between 0 and 1.")
+            self._bio = 1e-18
 
     def set_airQuality(self, airQuality):
         self._air = airQuality
@@ -65,12 +68,26 @@ class EcoSystem:
     def set_deforestation(self, deforestation):
         self._deforestation = deforestation
 
+def EcosystemsArray(ecosystemsFilePath):
+    l = []
+    with open(ecosystemsFilePath, 'rb') as f:
+        ecosystems = json.load(f)
+        for x in range(len(ecosystems)):
+            new_ecosystem = EcoSystem(ecosystems[x]["name"], 
+                                      ecosystems[x]["temperature"], 
+                                      ecosystems[x]["umidity"], 
+                                      ecosystems[x]["biodiversity"], 
+                                      ecosystems[x]["airQuality"], 
+                                      ecosystems[x]["waterQuality"], 
+                                      ecosystems[x]["deforestation"])
+            l.append(new_ecosystem)
+    return l
+
 
 class World:
-    
     def __init__(self, configFilePath, ecosystemsNode):
         with open(configFilePath, 'rb') as f:
-            self.worldConfig = json.loads(f)
+            self.worldConfig = json.load(f)
             
         self.nodes = {
             node.get_name(): node for node in ecosystemsNode 
@@ -434,17 +451,19 @@ class World:
         if attributeToBeUpdated == "temperature":
             attValue = node.get_temperature()
             delta = (newValue - attValue) / attValue # calc variation
+            print(delta)
+            print ("\n")
             results[ecosystemName] = self.simulateTemperature(delta, node, numYears)
 
-            for n in self.nodes:
+            for n_name, n_node in self.nodes.items():
                 
                 ### Propagando através do mundo as mudanças
 
-                if n.get_name() != ecosystemName:
+                if n_name != ecosystemName:
                      
-                    results[n.get_name()] = self.simulateTemperature( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
-                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteração_Temperatura"][n.get_name()],
-                        n,
+                    results[n_node.get_name()] = self.simulateTemperature( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
+                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteracao_Temperatura"][n_node.get_name()],
+                        n_node,
                         numYears
                     )
 
@@ -454,15 +473,15 @@ class World:
             delta = (newValue - attValue) / attValue
             results[ecosystemName] = self.simulateUmidity(delta, node, numYears)
 
-            for n in self.nodes:
+            for n_name, n_node in self.nodes.items():
                 
                 ### Propagando através do mundo as mudanças
 
-                if n.get_name() != ecosystemName:
+                if n_name != ecosystemName:
                      
-                    results[n.get_name()] = self.simulateUmidity( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
-                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteração_Temperatura"][n.get_name()],
-                        n,
+                    results[n_name] = self.simulateUmidity( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
+                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteracao_Temperatura"][n_name],
+                        n_node,
                         numYears
                     )
                     
@@ -471,15 +490,15 @@ class World:
             delta = (newValue - attValue) / attValue
             results[ecosystemName] = self.simulateBiodiversity(delta, node, numYears)
 
-            for n in self.nodes:
+            for n_name, n_node in self.nodes.items():
                 
                 ### Propagando através do mundo as mudanças
 
-                if n.get_name() != ecosystemName:
+                if n_name != ecosystemName:
                      
-                    results[n.get_name()] = self.simulateTemperature( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
-                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteração_Qualidade_do_Ar"][n.get_name()],
-                        n,
+                    results[n_name] = self.simulateTemperature( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
+                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteracao_Qualidade_do_Ar"][n_name],
+                        n_node,
                         numYears
                     )
                     
@@ -489,15 +508,15 @@ class World:
             delta = (newValue - attValue) / attValue
             results[ecosystemName] = self.simulateAirQuality(delta, node, numYears)
 
-            for n in self.nodes:
+            for n_name, n_node in self.nodes.items():
                 
                 ### Propagando através do mundo as mudanças
 
-                if n.get_name() != ecosystemName:
+                if n_name != ecosystemName:
                      
-                    results[n.get_name()] = self.simulateTemperature( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
-                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteração_Qualidade_do_Ar"][n.get_name()],
-                        n,
+                    results[n_name] = self.simulateTemperature( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
+                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteracao_Qualidade_do_Ar"][n_name],
+                        n_node,
                         numYears
                         )
                     
@@ -507,15 +526,15 @@ class World:
             delta = (newValue - attValue) / attValue
             results[ecosystemName] = self.simulateWaterQuality(delta, node, numYears)
 
-            for n in self.nodes:
+            for n_name, n_node in self.nodes.items():
                 
                 ### Propagando através do mundo as mudanças
 
-                if n.get_name() != ecosystemName:
+                if n_name != ecosystemName:
                      
-                    results[n.get_name()] = self.simulateTemperature( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
-                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteração_Qualidade_da_Agua"][n.get_name()],
-                        n,
+                    results[n_name] = self.simulateTemperature( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
+                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteracao_Qualidade_da_Agua"][n_name],
+                        n_node,
                         numYears
                     )
 
@@ -524,16 +543,24 @@ class World:
             delta = (newValue - attValue) / attValue
             results[ecosystemName] = self.simulateDeforestation(delta, node, numYears)
 
-            for n in self.nodes:
+            for n_name, n_node in self.nodes.items():
                 
                 ### Propagando através do mundo as mudanças
 
-                if n.get_name() != ecosystemName:
+                if n_name != ecosystemName:
                      
-                    results[n.get_name()] = self.simulateTemperature( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
-                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteração_Desmatamento"][n.get_name()],
-                        n,
+                    results[n_name] = self.simulateTemperature( # valor que terá como chave o nome do ecossistema e os valores de alteração para cada dia
+                        delta * self.worldConfig[ecosystemName]["OtherInformations"]["Weights"]["Alteracao_Desmatamento"][n_name],
+                        n_node,
                         numYears
                     )
         
         return results
+    
+
+### Testing section ###
+ecosystemsNode = EcosystemsArray(ecosystemsFilePath)
+world = World(configFilePath, ecosystemsNode)
+
+
+
