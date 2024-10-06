@@ -1,17 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
 
 const biomeColors = {
-  'Tundra': 'darkgreen',
-  'Florestas Tropicais': 'teal',
-  'Florestas Temperadas': 'lightgreen',
+  'Tundras': 'darkgreen',
+  'Tropical Forests': 'teal',
+  'Temperate Forests': 'lightgreen',
   'Manguezais': 'darkcyan',
-  'Recife de Corais': 'lightblue',
-  'Oceanos': 'blue',
-  'Savanas': 'orange',
-  'Desertos': 'yellow',
-  'Pradarias': 'Khaki',
+  'Coral Reef': 'lightblue',
+  'Oceans': 'blue',
+  'Savannas': 'orange',
+  'Desert': 'yellow',
+  'Prairies': 'Khaki',
   'Indefinido': 'gray'
 };
 
@@ -58,21 +59,21 @@ const MapComponent: React.FC = () => {
     };
   };
 
-  const onEachCountryFeature = (feature: any, layer: any) => {
+  const onEachCountryFeature = (feature: { properties: { name: any; }; }, layer: { bindPopup: (arg0: string) => void; on: (arg0: { mouseover: (e: { target: { openPopup: () => void; setStyle: (arg0: { weight: number; fillOpacity: number; }) => void; }; }) => void; mouseout: (e: { target: { closePopup: () => void; setStyle: (arg0: { weight: number; fillOpacity: number; }) => void; }; }) => void; }) => void; }) => {
     const countryName = feature.properties.name;
     const biome = countryBiomes[countryName] || 'Undefined';
 
     layer.bindPopup(`<strong>${countryName}</strong><br />Predominant biome: ${biome}`);
     
     layer.on({
-      mouseover: (e) => {
+      mouseover: (e: { target: { openPopup: () => void; setStyle: (arg0: { weight: number; fillOpacity: number; }) => void; }; }) => {
         e.target.openPopup();
         e.target.setStyle({
           weight: 2,
           fillOpacity: 0.9
         });
       },
-      mouseout: (e) => {
+      mouseout: (e: { target: { closePopup: () => void; setStyle: (arg0: { weight: number; fillOpacity: number; }) => void; }; }) => {
         e.target.closePopup();
         e.target.setStyle({
           weight: 1,
