@@ -2,85 +2,85 @@
     "ecosystems": [
         {
             "name": "Florestas Temperadas",
-            "temperature": 20,
-            "umidity": 50,
-            "biodiversity": 0.5,
-            "airQuality": 0.5,
-            "waterQuality": 0.5,
-            "deflorestation": 0.5
+            "temperature": 12.5,
+            "umidity": 0.7,
+            "biodiversity": 0.7,
+            "airQuality": 0.9,
+            "waterQuality": 0.85,
+            "deflorestation": 0.2
 
         },
         {
             "name": "Florestas Tropicais",
-            "temperature": 30,
-            "umidity": 80,
-            "biodiversity": 0.8,
-            "airQuality": 0.8,
-            "waterQuality": 0.8,
-            "deflorestation": 0.8
+            "temperature": 27.5,
+            "umidity": 0.87,
+            "biodiversity": 0.9,
+            "airQuality": 0.85,
+            "waterQuality": 0.75,
+            "deflorestation": 0.4
         },
         {
             "name": "Desertos",
-            "temperature": 40,
-            "umidity": 10,
-            "biodiversity": 0.1,
-            "airQuality": 0.1,
-            "waterQuality": 0.1,
-            "deflorestation": 0.1
+            "temperature": 32.5,
+            "umidity": 0.2,
+            "biodiversity": 0.2,
+            "airQuality": 0.7,
+            "waterQuality": 0.3,
+            "deflorestation": 0.05
         },
         {
             "name": "Savanas",
-            "temperature": 40,
-            "umidity": 10,
-            "biodiversity": 0.1,
-            "airQuality": 0.1,
-            "waterQuality": 0.1,
-            "deflorestation": 0.1
+            "temperature": 25,
+            "umidity": 0.5,
+            "biodiversity": 0.6,
+            "airQuality": 0.8,
+            "waterQuality": 0.6,
+            "deflorestation": 0.3
         },
         {
             "name": "Pradarias",
-            "temperature": 40,
-            "umidity": 10,
-            "biodiversity": 0.1,
-            "airQuality": 0.1,
-            "waterQuality": 0.1,
-            "deflorestation": 0.1
+            "temperature": 17.5,
+            "umidity": 0.55,
+            "biodiversity": 0.5,
+            "airQuality": 0.85,
+            "waterQuality": 0.7,
+            "deflorestation": 0.4
         },
         {
             "name": "Oceanos",
-            "temperature": 40,
-            "umidity": 10,
-            "biodiversity": 0.1,
-            "airQuality": 0.1,
-            "waterQuality": 0.1,
-            "deflorestation": 0.1
+            "temperature": 14,
+            "umidity": 1,
+            "biodiversity": 0.8,
+            "airQuality": 0.9,
+            "waterQuality": 0.76,
+            "deflorestation": 0
         },
         {
             "name": "Manguezais",
-            "temperature": 40,
-            "umidity": 10,
-            "biodiversity": 0.1,
-            "airQuality": 0.1,
-            "waterQuality": 0.1,
-            "deflorestation": 0.1
+            "temperature": 27,
+            "umidity": 0.9,
+            "biodiversity": 0.75,
+            "airQuality": 0.85,
+            "waterQuality": 0.70,
+            "deflorestation": 0.275
         },
         {
             "name": "Recifes de Corais",
-            "temperature": 40,
-            "umidity": 10,
-            "biodiversity": 0.1,
-            "airQuality": 0.1,
-            "waterQuality": 0.1,
-            "deflorestation": 0.1
+            "temperature": 24.5,
+            "umidity": 1,
+            "biodiversity": 0.85,
+            "airQuality": 0.8,
+            "waterQuality": 0.7,
+            "deflorestation": 0
         },
         {
             "name": "Tundras",
-            "temperature": 0,
-            "umidity": 10,
-            "biodiversity": 0.2,
-            "airQuality": 0.2,
-            "waterQuality": 0.2,
-            "deflorestation": 0.2
+            "temperature": -10,
+            "umidity": 0.6,
+            "biodiversity": 0.3,
+            "airQuality": 0.95,
+            "waterQuality": 0.85,
+            "deflorestation": 0.05
         }
     ]
 }

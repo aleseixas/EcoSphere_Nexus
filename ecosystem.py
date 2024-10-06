@@ -7,10 +7,10 @@ class EcoSystem:
         name,
         temperature,
         umidity,
-        biodiversity=1.0,  # Must be a value [0, 1]
-        airQuality=1,
-        waterQuality=1,
-        deforestation=0
+        biodiversity,  # Must be a value [0, 1]
+        airQuality,
+        waterQuality,
+        deforestation,
     ):
         self._name = name
         self._temp = temperature
