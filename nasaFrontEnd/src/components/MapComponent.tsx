@@ -2,18 +2,27 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
+import { FaTree, FaWater, FaMountain, FaLeaf, FaUmbrellaBeach, FaSnowflake, FaFireAlt, FaSeedling } from 'react-icons/fa'; // Importando ícones
 
 const biomeColors = {
   'Tundras': 'darkgreen',
   'Tropical Forests': 'teal',
   'Temperate Forests': 'lightgreen',
-  'Manguezais': 'darkcyan',
-  'Coral Reef': 'lightblue',
-  'Oceans': 'blue',
   'Savannas': 'orange',
   'Desert': 'yellow',
-  'Prairies': 'Khaki',
-  'Indefinido': 'gray'
+  'Prairies': 'Khaki'
+};
+
+const biomeIcons = {
+  'Tundras': <FaSnowflake />,
+  'Tropical Forests': <FaTree />,
+  'Temperate Forests': <FaLeaf />,
+  'Manguezais': <FaUmbrellaBeach />,
+  'Coral Reef': <FaWater />,
+  'Oceans': <FaWater />,
+  'Savannas': <FaFireAlt />,
+  'Desert': <FaMountain />,
+  'Prairies': <FaSeedling />,
 };
 
 const MapComponent: React.FC = () => {
@@ -23,7 +32,7 @@ const MapComponent: React.FC = () => {
 
   useEffect(() => {
     const fetchBiomes = async () => {
-      const response = await fetch('/countryBiomes_with_new_biomes.json');
+      const response = await fetch('/src/geojson/countryBiomes_with_new_biomes.json');
       const data = await response.json();
       setCountryBiomes(data);
     };
@@ -33,9 +42,9 @@ const MapComponent: React.FC = () => {
 
   useEffect(() => {
     const loadCountries = async () => {
-      const response = await fetch('/all_countries.geo.json');
+      const response = await fetch('/src/geojson/all_countries.geo.json');
       if (!response.ok) {
-        console.error('Error to load GeoJSON file');
+        console.error('Erro ao carregar o arquivo GeoJSON dos países');
         return;
       }
       const data = await response.json();
@@ -46,7 +55,7 @@ const MapComponent: React.FC = () => {
   }, []);
 
   const styleCountryFeature = (countryName: string, neighbors: any[]) => {
-    const biome = countryBiomes[countryName] || 'Undefined';
+    const biome = countryBiomes[countryName] || 'Indefinido';
     const biomeColor = biomeColors[biome] || 'gray';
 
     const allSameBiome = neighbors.every(neighbor => countryBiomes[neighbor] === biome);
@@ -61,9 +70,9 @@ const MapComponent: React.FC = () => {
 
   const onEachCountryFeature = (feature: { properties: { name: any; }; }, layer: { bindPopup: (arg0: string) => void; on: (arg0: { mouseover: (e: { target: { openPopup: () => void; setStyle: (arg0: { weight: number; fillOpacity: number; }) => void; }; }) => void; mouseout: (e: { target: { closePopup: () => void; setStyle: (arg0: { weight: number; fillOpacity: number; }) => void; }; }) => void; }) => void; }) => {
     const countryName = feature.properties.name;
-    const biome = countryBiomes[countryName] || 'Undefined';
+    const biome = countryBiomes[countryName] || 'Indefinido';
 
-    layer.bindPopup(`<strong>${countryName}</strong><br />Predominant biome: ${biome}`);
+    layer.bindPopup(`<strong>${countryName}</strong><br />Bioma predominante: ${biome}`);
     
     layer.on({
       mouseover: (e: { target: { openPopup: () => void; setStyle: (arg0: { weight: number; fillOpacity: number; }) => void; }; }) => {
@@ -88,27 +97,84 @@ const MapComponent: React.FC = () => {
   };
 
   return (
-    <MapContainer
-      center={worldCenter}
-      zoom={2}
-      minZoom={2}
-      maxBounds={[[-90, -180], [90, 180]]}
-      className="leaflet-container"
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
+    <div className="map-container">
+  <MapContainer
+    center={worldCenter}
+    zoom={2}
+    minZoom={2}
+    maxBounds={[[-90, -180], [90, 180]]}
+    className="leaflet-container"
+  >
+    <TileLayer
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    />
 
-      {countries.map((country, index) => (
-        <GeoJSON
-          key={index}
-          data={country}
-          style={() => styleCountryFeature(country.properties.name, getCountryNeighbors(country))}
-          onEachFeature={onEachCountryFeature}
-        />
-      ))}
-    </MapContainer>
+    {countries.map((country, index) => (
+      <GeoJSON
+        key={index}
+        data={country}
+        style={() => styleCountryFeature(country.properties.name, getCountryNeighbors(country))}
+        onEachFeature={onEachCountryFeature}
+      />
+    ))}
+  </MapContainer>
+
+  <div className="biome-buttons">
+    {Object.keys(biomeColors).map((biome, index) => (
+      <button
+        key={index}
+        className="biome-button"
+        style={{ backgroundColor: biomeColors[biome] }}
+        onClick={() => {
+          alert(`O botão do bioma ${biome} está funcionando!`);
+          // Aqui você pode adicionar a lógica que será executada quando o botão for clicado
+        }}
+      >
+        {biomeIcons[biome]}
+      </button>
+    ))}
+  </div>
+
+  <style jsx>{`
+    .map-container {
+      position: relative;
+      height: 100vh;
+    }
+
+    .leaflet-container {
+      z-index: 0; /* Garante que o mapa fique atrás dos botões */
+    }
+
+    .biome-buttons {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 1000; /* Garante que os botões fiquem acima do mapa */
+    }
+
+    .biome-button {
+      width: 40px;
+      height: 40px;
+      border: 2px solid black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer; /* Mostra o cursor de mãozinha */
+      transition: filter 0.2s ease; /* Transição suave para o efeito de hover */
+    }
+
+    .biome-button:hover {
+      filter: brightness(0.85); /* Escurece um pouco o botão no hover */
+    }
+  `}</style>
+</div>
   );
 };
 
