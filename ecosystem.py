@@ -99,29 +99,26 @@ class World:
         dangerLevel = 0 
         for _ in range(numYears):
 
-            if delta >= 0.05:
+            if abs(delta) >= 0.6:
                 dangerLevel = 5
                 
-            elif delta < 0.05 and delta >= 0.03:
+            elif abs(delta) < 0.6 and delta >= 0.48:
                 dangerLevel = 4
 
-            elif delta < 0.03 and delta >= 0.01:
+            elif abs(delta) < 0.36 and delta >= 0.24:
                 dangerLevel = 3
 
-            elif delta < 0.01 and delta >= -0.02:
-                dangerLevel = 3
-
-            elif delta < -0.02 and delta >= -0.05:
-                dangerLevel = 4
-
+            elif abs(delta) < 0.24 and delta >= 0.12:
+                dangerLevel = 2
             else:
-                dangerLevel = 5
+                dangerLevel = 1
             
-            newUmidity = originNode.get_umidity() * (1-6*delta) / numYears
-            newTemperature = originNode.get_temperature() * (1+delta)
-            newDeforestation = originNode.get_deforestation() * (1+2*delta) / numYears
-            newBiodiverstity = originNode.get_biodiversity() * (1-2*delta) / numYears
-            newAirQuality = originNode.get_airQuality() * (1-2*delta) / numYears
+            delta /= 30
+            newUmidity = originNode.get_umidity() * (1-6*delta/numYears)
+            newTemperature = originNode.get_temperature() * (1+delta/numYears)
+            newDeforestation = originNode.get_deforestation() * (1+2*delta/numYears)
+            newBiodiverstity = originNode.get_biodiversity() * (1-2*delta/numYears)
+            newAirQuality = originNode.get_airQuality() * (1-2*delta/numYears)
             newWaterQuality = originNode.get_waterQuality()
 
             originNode.set_umidity(newUmidity)
@@ -223,6 +220,20 @@ class World:
                 originNode.set_deforestation(newDeforestation)
                 originNode.set_biodiversity(newBiodiverstity)
                 originNode.set_airQuality(newAirQuality)
+
+            if abs(delta) >= 0.8:
+                dangerLevel = 5
+                
+            elif abs(delta) < 0.8 and delta >= 0.6:
+                dangerLevel = 4
+
+            elif abs(delta) < 0.6 and delta >= 0.4:
+                dangerLevel = 3
+
+            elif abs(delta) < 0.4 and delta >= 0.2:
+                dangerLevel = 2
+            else:
+                dangerLevel = 1
                 
             resultsSpace.append(
                 {
@@ -246,20 +257,19 @@ class World:
         dangerLevel = 0 
         for _ in range(numYears):
 
-            if delta <= -0.05:
-                dangerLevel = 0
+            if abs(delta) >= 0.8:
+                dangerLevel = 5
                 
-            elif delta > -0.05 and delta <= -0.03:
-                dangerLevel = 0
+            elif abs(delta) < 0.8 and delta >= 0.6:
+                dangerLevel = 4
 
-            elif delta > -0.03 and delta <= -0.01:
+            elif abs(delta) < 0.6 and delta >= 0.4:
                 dangerLevel = 3
 
-            elif delta > -0.01 and delta >= 0:
-                dangerLevel = 3
-
+            elif abs(delta) < 0.4 and delta >= 0.2:
+                dangerLevel = 2
             else:
-                dangerLevel = 0
+                dangerLevel = 1
             
             if dangerLevel > 0:
                 newUmidity = originNode.get_umidity() * (1+3*delta) / numYears
@@ -298,20 +308,19 @@ class World:
         dangerLevel = 0 
         for _ in range(numYears):
 
-            if delta >= 0.05:
+            if abs(delta) >= 0.8:
                 dangerLevel = 5
                 
-            elif delta < 0.05 and delta >= 0.03:
+            elif abs(delta) < 0.8 and delta >= 0.6:
                 dangerLevel = 4
 
-            elif delta < 0.03 and delta >= 0.01:
+            elif abs(delta) < 0.6 and delta >= 0.4:
                 dangerLevel = 3
 
-            elif delta > 0:
+            elif abs(delta) < 0.4 and delta >= 0.2:
                 dangerLevel = 2
-
             else:
-                dangerLevel = 0
+                dangerLevel = 1
 
             if dangerLevel > 0:
                 newUmidity = originNode.get_umidity() * (1-3*delta) / numYears
@@ -350,28 +359,27 @@ class World:
         dangerLevel = 0 
         for _ in range(numYears):
 
-            if delta <= -0.05:
+            if abs(delta) >= 0.9:
                 dangerLevel = 5
                 
-            elif delta > -0.05 and delta <= -0.03:
+            elif abs(delta) < 0.9 and delta >= 0.7:
                 dangerLevel = 4
 
-            elif delta > -0.03 and delta <= -0.01:
+            elif abs(delta) < 0.7 and delta >= 0.4:
                 dangerLevel = 3
 
-            elif delta > -0.01 and delta < 0:
+            elif abs(delta) < 0.4 and delta >= 0.2:
                 dangerLevel = 2
-
             else:
-                dangerLevel = 0
+                dangerLevel = 1
             
             if dangerLevel > 0:
-
+                delta = delta*2
                 newUmidity = originNode.get_umidity() * (1+delta) / numYears
                 newTemperature = originNode.get_temperature() * (1-delta) / numYears
-                newDeforestation = originNode.get_deforestation() * (1-4*delta) / numYears
-                newBiodiverstity = originNode.get_biodiversity() * (1+5*delta) / numYears
-                newAirQuality = originNode.get_airQuality() * (1+4*delta) / numYears
+                newDeforestation = originNode.get_deforestation() * (1-delta) / numYears
+                newBiodiverstity = originNode.get_biodiversity() * (1+3*delta) / numYears
+                newAirQuality = originNode.get_airQuality() * (1+delta) / numYears
                 newWaterQuality = originNode.get_waterQuality() * (1+delta) / numYears
                 
                 originNode.set_umidity(newUmidity)
@@ -403,14 +411,19 @@ class World:
         dangerLevel = 0 
         for _ in range(numYears):
 
-            if delta <= -0.01:
+            if abs(delta) >= 0.7:
                 dangerLevel = 5
                 
-            elif delta > -0.01 and delta <= -0.005:
+            elif abs(delta) < 0.7 and delta >= 0.5:
                 dangerLevel = 4
 
-            else:
+            elif abs(delta) < 0.5 and delta >= 0.4:
                 dangerLevel = 3
+
+            elif abs(delta) < 0.4 and delta >= 0.1:
+                dangerLevel = 2
+            else:
+                dangerLevel = 1
             
             newUmidity = originNode.get_umidity() * (1+6*delta) / numYears
             newTemperature = originNode.get_temperature() * (1-5*delta)
@@ -451,8 +464,6 @@ class World:
         if attributeToBeUpdated == "temperature":
             attValue = node.get_temperature()
             delta = (newValue - attValue) / attValue # calc variation
-            print(delta)
-            print ("\n")
             results[ecosystemName] = self.simulateTemperature(delta, node, numYears)
 
             for n_name, n_node in self.nodes.items():
@@ -487,7 +498,7 @@ class World:
                     
         elif attributeToBeUpdated == "biodiversity":
             attValue = node.get_biodiversity()
-            delta = (newValue - attValue) / attValue
+            delta = (newValue - attValue) / newValue
             results[ecosystemName] = self.simulateBiodiversity(delta, node, numYears)
 
             for n_name, n_node in self.nodes.items():
@@ -561,6 +572,15 @@ class World:
 ### Testing section ###
 ecosystemsNode = EcosystemsArray(ecosystemsFilePath)
 world = World(configFilePath, ecosystemsNode)
+#results = world.simulate(ecosystemsNode[0].get_name(),"temperature", 30, 10)
+#print(world.simulate(ecosystemsNode[0].get_name(),"umidity", 0.4, 10))
+results = world.simulate(ecosystemsNode[0].get_name(),"biodiversity", 0.4, 10)
+world.simulate(ecosystemsNode[0].get_name(),"airQuality", 0.1, 10)
+world.simulate(ecosystemsNode[0].get_name(),"waterQuality", 0.3, 10)
+world.simulate(ecosystemsNode[0].get_name(),"deforestation", 0.1, 10)
+
+for key, value in results.items():
+    print(value["dangerlevel"])
 
 
 
