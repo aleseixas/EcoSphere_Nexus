@@ -1,98 +1,97 @@
-// src/MapComponent.tsx
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
-import shp from 'shpjs';  // Importando a biblioteca shp.js
 
-const biomesData = [
-  { name: 'Amazônia', color: 'green', file: '/amazon_biome_border.zip' },
-  { name: 'Caatinga', color: 'yellow', file: '/caatinga_biome_border.zip' },
-  { name: 'Cerrado', color: 'orange', file: '/cerrado_biome_border.zip' },
-  { name: 'Mata Atlântica', color: 'blue', file: '/mata_atlantica_biome_border.zip' },
-  { name: 'Pampa', color: 'red', file: '/pampas_biome_border.zip' },
-  { name: 'Pantanal', color: 'purple', file: '/pantanal_biome_border.zip' }
-];
+const biomeColors = {
+  'Tundra': 'darkgreen',
+  'Florestas Tropicais': 'teal',
+  'Florestas Temperadas': 'lightgreen',
+  'Manguezais': 'darkcyan',
+  'Recife de Corais': 'lightblue',
+  'Oceanos': 'blue',
+  'Savanas': 'orange',
+  'Desertos': 'yellow',
+  'Pradarias': 'Khaki',
+  'Indefinido': 'gray'
+};
 
 const MapComponent: React.FC = () => {
-  const brazilCenter: LatLngExpression = [-14.235004, -51.92528]; // Coordenadas aproximadas do centro do Brasil
-  const [biomes, setBiomes] = useState<any[]>([]);  // Estado para armazenar os dados GeoJSON dos biomas
-  const [otherCountriesGeoJson, setOtherCountriesGeoJson] = useState<any>(null); // Estado para armazenar GeoJSON dos outros países
+  const worldCenter: LatLngExpression = [0, 0];
+  const [countries, setCountries] = useState<any[]>([]);
+  const [countryBiomes, setCountryBiomes] = useState<any>({});
 
-  // Função para carregar os arquivos .zip dos biomas e converter para GeoJSON
   useEffect(() => {
-    const loadBiomes = async () => {
-      const loadedBiomes = await Promise.all(
-        biomesData.map(async (biome) => {
-          const response = await fetch(biome.file);  // Caminho para cada arquivo .zip
-          const arrayBuffer = await response.arrayBuffer();  // Lê o arquivo como ArrayBuffer
-          const geojson = await shp(arrayBuffer);  // Converte o shapefile para GeoJSON
-          return { name: biome.name, color: biome.color, geojson };
-        })
-      );
-      setBiomes(loadedBiomes);  // Armazena os dados GeoJSON no estado
+    const fetchBiomes = async () => {
+      const response = await fetch('/countryBiomes_with_new_biomes.json');
+      const data = await response.json();
+      setCountryBiomes(data);
     };
 
-    // Carregar GeoJSON de todos os outros países (exceto Brasil)
-    const loadOtherCountries = async () => {
-      const response = await fetch('/countries.geo.json');  // Caminho para o GeoJSON dos países
-      const geojson = await response.json();  // Converte o arquivo para JSON
-      setOtherCountriesGeoJson(geojson);  // Armazena os dados no estado
-    };
-
-    loadBiomes();  // Carrega os biomas
-    loadOtherCountries();  // Carrega os outros países
+    fetchBiomes();
   }, []);
 
-  // Função para aplicar estilos ao GeoJSON de cada bioma
-  const styleBiomeFeature = (biomeColor: string) => {
+  useEffect(() => {
+    const loadCountries = async () => {
+      const response = await fetch('/all_countries.geo.json');
+      if (!response.ok) {
+        console.error('Error to load GeoJSON file');
+        return;
+      }
+      const data = await response.json();
+      setCountries(data.features);
+    };
+
+    loadCountries();
+  }, []);
+
+  const styleCountryFeature = (countryName: string, neighbors: any[]) => {
+    const biome = countryBiomes[countryName] || 'Undefined';
+    const biomeColor = biomeColors[biome] || 'gray';
+
+    const allSameBiome = neighbors.every(neighbor => countryBiomes[neighbor] === biome);
+
     return {
-      fillColor: `url(#gradient-${biomeColor})`,  // Gradiente aplicado ao preenchimento
-      color: biomeColor,                        // Cor da borda
-      weight: 2,                                // Espessura da borda
-      fillOpacity: 0.5,                         // Transparência do preenchimento
+      fillColor: biomeColor,
+      color: allSameBiome ? biomeColor : 'black',
+      weight: allSameBiome ? 0 : 1,
+      fillOpacity: 0.7
     };
   };
 
-  // Função para exibir o nome do bioma no hover
-  const onEachBiomeFeature = (biomeName: string) => (feature: any, layer: any) => {
-    layer.bindPopup(`<strong>${biomeName}</strong>`);
+  const onEachCountryFeature = (feature: any, layer: any) => {
+    const countryName = feature.properties.name;
+    const biome = countryBiomes[countryName] || 'Undefined';
+
+    layer.bindPopup(`<strong>${countryName}</strong><br />Predominant biome: ${biome}`);
+    
     layer.on({
       mouseover: (e) => {
         e.target.openPopup();
         e.target.setStyle({
-          weight: 4,  // Destaca a borda no hover
-          fillOpacity: 0.8,  // Aumenta a opacidade no hover
+          weight: 2,
+          fillOpacity: 0.9
         });
       },
       mouseout: (e) => {
         e.target.closePopup();
         e.target.setStyle({
-          weight: 2,  // Restaura a espessura da borda
-          fillOpacity: 0.5,  // Restaura a opacidade original
+          weight: 1,
+          fillOpacity: 0.7
         });
       }
     });
   };
 
-  // Função para aplicar estilos ao GeoJSON dos outros países (cor sólida cinza)
-  const styleOtherCountries = () => {
-    return {
-      fillColor: 'lightgray',  // Cor sólida cinza para os outros países
-      color: 'gray',           // Borda cinza
-      weight: 1,               // Espessura da borda
-      fillOpacity: 0.5,        // Transparência do preenchimento
-    };
+  const getCountryNeighbors = (feature: any) => {
+    return feature.properties.neighbors || [];
   };
 
   return (
     <MapContainer
-      center={brazilCenter}  // Centraliza o mapa no Brasil
-      zoom={4}               // Ajuste de zoom inicial
-      minZoom={2}            // Limitar zoom-out para que o Brasil ainda esteja visível
-      maxBounds={[
-        [-90, -180],
-        [90, 180],
-      ]}
+      center={worldCenter}
+      zoom={2}
+      minZoom={2}
+      maxBounds={[[-90, -180], [90, 180]]}
       className="leaflet-container"
     >
       <TileLayer
@@ -100,35 +99,14 @@ const MapComponent: React.FC = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
 
-      {/* Definição dos gradientes para biomas */}
-      <svg>
-        {biomesData.map((biome) => (
-          <defs key={biome.color}>
-            <linearGradient id={`gradient-${biome.color}`} gradientTransform="rotate(90)">
-              <stop offset="0%" stopColor={biome.color} />
-              <stop offset="100%" stopColor="white" />
-            </linearGradient>
-          </defs>
-        ))}
-      </svg>
-
-      {/* Renderiza cada bioma com seu respectivo estilo */}
-      {biomes.map((biome) => (
+      {countries.map((country, index) => (
         <GeoJSON
-          key={biome.name}
-          data={biome.geojson}
-          style={() => styleBiomeFeature(biome.color)}
-          onEachFeature={onEachBiomeFeature(biome.name)}
+          key={index}
+          data={country}
+          style={() => styleCountryFeature(country.properties.name, getCountryNeighbors(country))}
+          onEachFeature={onEachCountryFeature}
         />
       ))}
-
-      {/* Renderiza o resto dos países com cor sólida cinza */}
-      {otherCountriesGeoJson && (
-        <GeoJSON
-          data={otherCountriesGeoJson}
-          style={styleOtherCountries}
-        />
-      )}
     </MapContainer>
   );
 };
