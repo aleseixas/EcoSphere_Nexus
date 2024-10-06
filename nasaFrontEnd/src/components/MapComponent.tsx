@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+import countriesJson from './../geojson/all_countries.geo.json';
+import countriesBiomes from './../geojson/countryBiomes_with_new_biomes.json';
 import { LatLngExpression } from 'leaflet';
-import { FaTree, FaWater, FaMountain, FaLeaf, FaUmbrellaBeach, FaSnowflake, FaFireAlt, FaSeedling } from 'react-icons/fa'; // Importando ícones
+import { FaTree, FaWater, FaMountain, FaSun, FaCloudShowersHeavy, FaUmbrellaBeach, FaLeaf, FaSeedling } from 'react-icons/fa'; // Importando ícones
 
 const biomeColors = {
   'Tundras': 'darkgreen',
@@ -14,15 +16,15 @@ const biomeColors = {
 };
 
 const biomeIcons = {
-  'Tundras': <FaSnowflake />,
-  'Tropical Forests': <FaTree />,
-  'Temperate Forests': <FaLeaf />,
+  'Tundras': <FaSeedling />,
+  'Tropical Forests': <FaCloudShowersHeavy />,
+  'Temperate Forests': <FaTree />,
   'Manguezais': <FaUmbrellaBeach />,
   'Coral Reef': <FaWater />,
   'Oceans': <FaWater />,
-  'Savannas': <FaFireAlt />,
+  'Savannas': <FaSun />,
   'Desert': <FaMountain />,
-  'Prairies': <FaSeedling />,
+  'Prairies': <FaLeaf />,
 };
 
 const MapComponent: React.FC = () => {
@@ -32,9 +34,7 @@ const MapComponent: React.FC = () => {
 
   useEffect(() => {
     const fetchBiomes = async () => {
-      const response = await fetch('/src/geojson/countryBiomes_with_new_biomes.json');
-      const data = await response.json();
-      setCountryBiomes(data);
+      setCountryBiomes(countriesBiomes);
     };
 
     fetchBiomes();
@@ -42,13 +42,7 @@ const MapComponent: React.FC = () => {
 
   useEffect(() => {
     const loadCountries = async () => {
-      const response = await fetch('/src/geojson/all_countries.geo.json');
-      if (!response.ok) {
-        console.error('Erro ao carregar o arquivo GeoJSON dos países');
-        return;
-      }
-      const data = await response.json();
-      setCountries(data.features);
+      setCountries(countriesJson.features);
     };
 
     loadCountries();
@@ -136,7 +130,7 @@ const MapComponent: React.FC = () => {
     ))}
   </div>
 
-  <style jsx>{`
+  <style>{`
     .map-container {
       position: relative;
       height: 100vh;
