@@ -2,6 +2,43 @@ import React, { useState } from 'react';
 import { Slider, Typography, Box, Button } from '@mui/material';
 import './Sidebar.css'; // Manter o estilo do sidebar
 
+interface ApiResponse {
+  data: any;
+}
+
+interface RequestData {
+  numYears: number;
+  attributeToBeAltered: string;
+  newValue: number;
+  ecosystemName: string;
+}
+
+async function fetchData(numYears: number, attribute: string, newValue: number, ecosystemName: string): Promise<ApiResponse> {
+  const requestData: RequestData = {
+    "numYears": numYears,
+    "attributeToBeAltered": attribute,
+    "newValue": newValue,
+    "ecosystemName": ecosystemName
+  };
+  try {
+    const response = await fetch(
+      "https://apidocker2-902862667412.us-central1.run.app", {
+      method: 'GET', // Método GET por padrão
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData), // Envia o objeto requestData como JSON
+    });
+
+
+    const data: ApiResponse = await response.json();
+    return data;
+
+  } catch (error) {
+    console.error('Erro ao buscar dados:', error);
+  }
+}
+
 const Sidebar = () => {
   const [selectedMetric, setSelectedMetric] = useState('temperature');
   const [metricValue, setMetricValue] = useState({
@@ -22,16 +59,19 @@ const Sidebar = () => {
   };
 
   const handleExecute = () => {
-    alert(`
-      Selected values:
-      Temperature: ${metricValue.temperature}°C
-      Air Quality: ${metricValue.airQuality}%
-      Water Quality: ${metricValue.waterQuality}%
-      Humidity: ${metricValue.humidity}%
-      Biodiversity: ${metricValue.biodiversity}%
-      Deforestation: ${metricValue.deforestation}%
-    `);
+
+    // fetch("https://apidocker2-902862667412.us-central1.run.app")
+  //   alert(`
+  //     Selected values:
+  //     Temperature: ${metricValue.temperature}°C
+  //     Air Quality: ${metricValue.airQuality}%
+  //     Water Quality: ${metricValue.waterQuality}%
+  //     Humidity: ${metricValue.humidity}%
+  //     Biodiversity: ${metricValue.biodiversity}%
+  //     Deforestation: ${metricValue.deforestation}%
+  //   `);
   };
+
 
   // Define os valores mínimo e máximo do slider conforme a métrica
   const getMinMaxValues = () => {

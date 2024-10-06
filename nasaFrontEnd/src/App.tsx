@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       {/* Adiciona o Sidebar ao lado do Mapa */}
-      <Sidebar />
+      {/* <Sidebar /> */}
       <MapComponent />
     </div>
   );

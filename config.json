@@ -1,0 +1,416 @@
+{  
+    "Florestas Tropicais": {
+        "OtherInformations": {
+            "Weights": {
+                "Alteracao_Temperatura": {
+                    "Florestas Temperadas": 0.7,
+                    "Savanas": 0.5,
+                    "Desertos": 0.6,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.7,
+                    "Oceanos": 0.9,
+                    "Manguezais": 0.8,
+                    "Recifes de Corais": 0.9
+                },
+                "Alteracao_Qualidade_do_Ar": {
+                    "Florestas Temperadas": 0.6,
+                    "Savanas": 0.5,
+                    "Desertos": 0.4,
+                    "Tundras": 0.5,
+                    "Pradarias": 0.7,
+                    "Oceanos": 0.9,
+                    "Manguezais": 0.8,
+                    "Recifes de Corais": 0.8
+                },
+                "Alteracao_Desmatamento": {
+                    "Florestas Temperadas": 0.6,
+                    "Savanas": 0.5,
+                    "Desertos": 0.4,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.7,
+                    "Oceanos": 0.8,
+                    "Manguezais": 0.8,
+                    "Recifes de Corais": 0.7
+                },
+                "Alteracao_Qualidade_da_Agua": {
+                    "Florestas Temperadas": 0.5,
+                    "Savanas": 0.4,
+                    "Desertos": 0.3,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.5,
+                    "Oceanos": 0.9,
+                    "Manguezais": 0.8,
+                    "Recifes de Corais": 0.9
+                }
+            }
+        }
+    },
+    "Florestas Temperadas": {
+        "OtherInformations": {
+            "Weights": {
+                "Alteracao_Temperatura": {
+                    "Florestas Tropicais": 0.6,
+                    "Savanas": 0.5,
+                    "Desertos": 0.4,
+                    "Tundras": 0.7,
+                    "Pradarias": 0.7,
+                    "Oceanos": 0.7,
+                    "Manguezais": 0.6,
+                    "Recifes de Corais": 0.6
+                },
+                "Alteracao_Qualidade_do_Ar": {
+                    "Florestas Tropicais": 0.5,
+                    "Savanas": 0.4,
+                    "Desertos": 0.3,
+                    "Tundras": 0.6,
+                    "Pradarias": 0.6,
+                    "Oceanos": 0.6,
+                    "Manguezais": 0.5,
+                    "Recifes de Corais": 0.5
+                },
+                "Alteracao_Desmatamento": {
+                    "Florestas Tropicais": 0.5,
+                    "Savanas": 0.4,
+                    "Desertos": 0.3,
+                    "Tundras": 0.6,
+                    "Pradarias": 0.5,
+                    "Oceanos": 0.5,
+                    "Manguezais": 0.4,
+                    "Recifes de Corais": 0.4
+                },
+                "Alteracao_Qualidade_da_Agua": {
+                    "Florestas Tropicais": 0.4,
+                    "Savanas": 0.3,
+                    "Desertos": 0.2,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.5,
+                    "Oceanos": 0.5,
+                    "Manguezais": 0.4,
+                    "Recifes de Corais": 0.3
+                }
+            }
+        }
+    },
+    "Savanas": {
+        "OtherInformations": {
+            "Weights": {
+                "Alteracao_Temperatura": {
+                    "Florestas Tropicais": 0.6,
+                    "Florestas Temperadas": 0.5,
+                    "Desertos": 0.6,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.6,
+                    "Oceanos": 0.6,
+                    "Manguezais": 0.5,
+                    "Recifes de Corais": 0.5
+                },
+                "Alteracao_Qualidade_do_Ar": {
+                    "Florestas Tropicais": 0.5,
+                    "Florestas Temperadas": 0.4,
+                    "Desertos": 0.3,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.5,
+                    "Oceanos": 0.5,
+                    "Manguezais": 0.4,
+                    "Recifes de Corais": 0.4
+                },
+                "Alteracao_Desmatamento": {
+                    "Florestas Tropicais": 0.6,
+                    "Florestas Temperadas": 0.5,
+                    "Desertos": 0.4,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.6,
+                    "Oceanos": 0.5,
+                    "Manguezais": 0.4,
+                    "Recifes de Corais": 0.4
+                },
+                "Alteracao_Qualidade_da_Agua": {
+                    "Florestas Tropicais": 0.5,
+                    "Florestas Temperadas": 0.4,
+                    "Desertos": 0.3,
+                    "Tundras": 0.3,
+                    "Pradarias": 0.5,
+                    "Oceanos": 0.5,
+                    "Manguezais": 0.4,
+                    "Recifes de Corais": 0.3
+                }
+            }
+        }
+    },
+    "Desertos": {
+        "OtherInformations": {
+            "Weights": {
+                "Alteracao_Temperatura": {
+                    "Florestas Tropicais": 0.6,
+                    "Florestas Temperadas": 0.5,
+                    "Savanas": 0.6,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.7,
+                    "Oceanos": 0.6,
+                    "Manguezais": 0.4,
+                    "Recifes de Corais": 0.4
+                },
+                "Alteracao_Qualidade_do_Ar": {
+                    "Florestas Tropicais": 0.5,
+                    "Florestas Temperadas": 0.4,
+                    "Savanas": 0.5,
+                    "Tundras": 0.3,
+                    "Pradarias": 0.4,
+                    "Oceanos": 0.4,
+                    "Manguezais": 0.3,
+                    "Recifes de Corais": 0.3
+                },
+                "Alteracao_Desmatamento": {
+                    "Florestas Tropicais": 0.5,
+                    "Florestas Temperadas": 0.4,
+                    "Savanas": 0.6,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.5,
+                    "Oceanos": 0.4,
+                    "Manguezais": 0.3,
+                    "Recifes de Corais": 0.3
+                },
+                "Alteracao_Qualidade_da_Agua": {
+                    "Florestas Tropicais": 0.4,
+                    "Florestas Temperadas": 0.3,
+                    "Savanas": 0.4,
+                    "Tundras": 0.3,
+                    "Pradarias": 0.4,
+                    "Oceanos": 0.4,
+                    "Manguezais": 0.3,
+                    "Recifes de Corais": 0.2
+                }
+            }
+        }
+    },
+    "Tundras": {
+        "OtherInformations": {
+            "Weights": {
+                "Alteracao_Temperatura": {
+                    "Florestas Tropicais": 0.5,
+                    "Florestas Temperadas": 0.8,
+                    "Savanas": 0.4,
+                    "Desertos": 0.6,
+                    "Pradarias": 0.7,
+                    "Oceanos": 0.5,
+                    "Manguezais": 0.4,
+                    "Recifes de Corais": 0.3
+                },
+                "Alteracao_Qualidade_do_Ar": {
+                    "Florestas Tropicais": 0.4,
+                    "Florestas Temperadas": 0.6,
+                    "Savanas": 0.4,
+                    "Desertos": 0.4,
+                    "Pradarias": 0.5,
+                    "Oceanos": 0.5,
+                    "Manguezais": 0.3,
+                    "Recifes de Corais": 0.3
+                },
+                "Alteracao_Desmatamento": {
+                    "Florestas Tropicais": 0.4,
+                    "Florestas Temperadas": 0.5,
+                    "Savanas": 0.4,
+                    "Desertos": 0.3,
+                    "Pradarias": 0.5,
+                    "Oceanos": 0.4,
+                    "Manguezais": 0.3,
+                    "Recifes de Corais": 0.3
+                },
+                "Alteracao_Qualidade_da_Agua": {
+                    "Florestas Tropicais": 0.4,
+                    "Florestas Temperadas": 0.5,
+                    "Savanas": 0.4,
+                    "Desertos": 0.3,
+                    "Pradarias": 0.5,
+                    "Oceanos": 0.6,
+                    "Manguezais": 0.4,
+                    "Recifes de Corais": 0.3
+                }
+            }
+        }
+    },
+    "Pradarias": {
+        "OtherInformations": {
+            "Weights": {
+                "Alteracao_Temperatura": {
+                    "Florestas Tropicais": 0.7,
+                    "Florestas Temperadas": 0.7,
+                    "Savanas": 0.6,
+                    "Desertos": 0.6,
+                    "Tundras": 0.5,
+                    "Oceanos": 0.6,
+                    "Manguezais": 0.5,
+                    "Recifes de Corais": 0.4
+                },
+                "Alteracao_Qualidade_do_Ar": {
+                    "Florestas Tropicais": 0.7,
+                    "Florestas Temperadas": 0.6,
+                    "Savanas": 0.5,
+                    "Desertos": 0.4,
+                    "Tundras": 0.5,
+                    "Oceanos": 0.6,
+                    "Manguezais": 0.4,
+                    "Recifes de Corais": 0.4
+                },
+                "Alteracao_Desmatamento": {
+                    "Florestas Tropicais": 0.6,
+                    "Florestas Temperadas": 0.5,
+                    "Savanas": 0.5,
+                    "Desertos": 0.4,
+                    "Tundras": 0.4,
+                    "Oceanos": 0.4,
+                    "Manguezais": 0.3,
+                    "Recifes de Corais": 0.3
+                },
+                "Alteracao_Qualidade_da_Agua": {
+                    "Florestas Tropicais": 0.5,
+                    "Florestas Temperadas": 0.5,
+                    "Savanas": 0.4,
+                    "Desertos": 0.3,
+                    "Tundras": 0.4,
+                    "Oceanos": 0.5,
+                    "Manguezais": 0.4,
+                    "Recifes de Corais": 0.3
+                }
+            }
+        }
+    },
+    "Oceanos": {
+        "OtherInformations": {
+            "Weights": {
+                "Alteracao_Temperatura": {
+                    "Florestas Tropicais": 0.9,
+                    "Florestas Temperadas": 0.7,
+                    "Savanas": 0.6,
+                    "Desertos": 0.6,
+                    "Tundras": 0.5,
+                    "Pradarias": 0.6,
+                    "Manguezais": 0.6,
+                    "Recifes de Corais": 0.9
+                },
+                "Alteracao_Qualidade_do_Ar": {
+                    "Florestas Tropicais": 0.8,
+                    "Florestas Temperadas": 0.6,
+                    "Savanas": 0.5,
+                    "Desertos": 0.4,
+                    "Tundras": 0.5,
+                    "Pradarias": 0.6,
+                    "Manguezais": 0.5,
+                    "Recifes de Corais": 0.8
+                },
+                "Alteracao_Desmatamento": {
+                    "Florestas Tropicais": 0.8,
+                    "Florestas Temperadas": 0.5,
+                    "Savanas": 0.5,
+                    "Desertos": 0.4,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.5,
+                    "Manguezais": 0.5,
+                    "Recifes de Corais": 0.7
+                },
+                "Alteracao_Qualidade_da_Agua": {
+                    "Florestas Tropicais": 0.9,
+                    "Florestas Temperadas": 0.5,
+                    "Savanas": 0.4,
+                    "Desertos": 0.4,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.5,
+                    "Manguezais": 0.6,
+                    "Recifes de Corais": 0.9
+                }
+            }
+        }
+    },
+    "Manguezais": {
+        "OtherInformations": {
+            "Weights": {
+                "Alteracao_Temperatura": {
+                    "Florestas Tropicais": 0.8,
+                    "Florestas Temperadas": 0.6,
+                    "Savanas": 0.5,
+                    "Desertos": 0.4,
+                    "Tundras": 0.4,
+                    "Pradarias": 0.5,
+                    "Oceanos": 0.6,
+                    "Recifes de Corais": 0.8
+                },
+                "Alteracao_Qualidade_do_Ar": {
+                    "Florestas Tropicais": 0.8,
+                    "Florestas Temperadas": 0.5,
+                    "Savanas": 0.4,
+                    "Desertos": 0.3,
+                    "Tundras": 0.3,
+                    "Pradarias": 0.4,
+                    "Oceanos": 0.5,
+                    "Recifes de Corais": 0.7
+                },
+                "Alteracao_Desmatamento": {
+                    "Florestas Tropicais": 0.7,
+                    "Florestas Temperadas": 0.4,
+                    "Savanas": 0.4,
+                    "Desertos": 0.3,
+                    "Tundras": 0.3,
+                    "Pradarias": 0.3,
+                    "Oceanos": 0.5,
+                    "Recifes de Corais": 0.6
+                },
+                "Alteracao_Qualidade_da_Agua": {
+                    "Florestas Tropicais": 0.8,
+                    "Florestas Temperadas": 0.4,
+                    "Savanas": 0.3,
+                    "Desertos": 0.3,
+                    "Tundras": 0.3,
+                    "Pradarias": 0.3,
+                    "Oceanos": 0.6,
+                    "Recifes de Corais": 0.8
+                }
+            }
+        }
+    },
+    "Recifes de Corais": {
+        "OtherInformations": {
+            "Weights": {
+                "Alteracao_Temperatura": {
+                    "Florestas Tropicais": 0.9,
+                    "Florestas Temperadas": 0.6,
+                    "Savanas": 0.5,
+                    "Desertos": 0.4,
+                    "Tundras": 0.3,
+                    "Pradarias": 0.4,
+                    "Oceanos": 0.9,
+                    "Manguezais": 0.8
+                },
+                "Alteracao_Qualidade_do_Ar": {
+                    "Florestas Tropicais": 0.8,
+                    "Florestas Temperadas": 0.5,
+                    "Savanas": 0.4,
+                    "Desertos": 0.3,
+                    "Tundras": 0.3,
+                    "Pradarias": 0.4,
+                    "Oceanos": 0.8,
+                    "Manguezais": 0.7
+                },
+                "Alteracao_Desmatamento": {
+                    "Florestas Tropicais": 0.7,
+                    "Florestas Temperadas": 0.4,
+                    "Savanas": 0.4,
+                    "Desertos": 0.3,
+                    "Tundras": 0.3,
+                    "Pradarias": 0.3,
+                    "Oceanos": 0.7,
+                    "Manguezais": 0.6
+                },
+                "Alteracao_Qualidade_da_Agua": {
+                    "Florestas Tropicais": 0.9,
+                    "Florestas Temperadas": 0.3,
+                    "Savanas": 0.3,
+                    "Desertos": 0.2,
+                    "Tundras": 0.3,
+                    "Pradarias": 0.3,
+                    "Oceanos": 0.9,
+                    "Manguezais": 0.8
+                }
+            }
+        }
+    }
+}
