@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface EcosystemProfileProps {
+    className?:string;
     name: string;
     image: string;
     description: string;

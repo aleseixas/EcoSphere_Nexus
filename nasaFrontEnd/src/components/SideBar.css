@@ -48,3 +48,115 @@
   font-size: 1.1em;
   margin-bottom: 20px;
 }
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-popup {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  resize: both; /* Permite redimensionar */
+  overflow: auto;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.chat-history {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.user-message {
+  text-align: right;
+  color: #4a90e2;
+  margin-bottom: 5px;
+}
+
+.ia-message {
+  text-align: left;
+  color: #3cb371;
+  margin-bottom: 5px;
+}
+
+input[type="text"] {
+  width: calc(100% - 100px);
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  outline: none;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #4a90e2;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Botão "Enviar" */
+.chat-popup button {
+  padding: 10px 15px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: 10px;
+}
+
+.chat-popup button:hover {
+  background-color: #357ab8;
+  transform: scale(1.05);
+}
+
+.chat-popup button:active {
+  transform: scale(0.98);
+}
+
+button:focus {
+  outline: none;
+}
+
+button.close-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button.close-button:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}

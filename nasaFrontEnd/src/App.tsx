@@ -1,16 +1,19 @@
-import './App.css';
-import MapComponent from './components/MapComponent';
-import Sidebar from './components/SideBar'; // Importa o Sidebar
-import 'leaflet/dist/leaflet.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar'; // Import your Navbar component
+import Informations from './pages/Info'; // Import your components for pages
+import WorldSimulation from './pages/MapaInterativo';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      {/* Adiciona o Sidebar ao lado do Mapa */}
-      <Sidebar />
-      <MapComponent />
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/informations" element={<Informations />} />
+        <Route path="/world-simulation" element={<WorldSimulation />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

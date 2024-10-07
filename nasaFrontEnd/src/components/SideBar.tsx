@@ -12,6 +12,10 @@ const Sidebar = () => {
     biodiversity: 70,
     deforestation: 30,
   });
+  const [isChatOpen, setIsChatOpen] = useState(false); // Controla a exibição do chat
+  const [userMessage, setUserMessage] = useState('');
+  const [chatHistory, setChatHistory] = useState<{ sender: string, message: string }[]>([]);
+  const [loading, setLoading] = useState(false);
 
   // Função para atualizar o valor da métrica
   const handleSliderChange = (event: Event, value: number | number[]) => {
@@ -21,16 +25,44 @@ const Sidebar = () => {
     });
   };
 
+  // Função para abrir o chat quando o botão "EXECUTE" for clicado
   const handleExecute = () => {
-    alert(`
-      Selected values:
-      Temperature: ${metricValue.temperature}°C
-      Air Quality: ${metricValue.airQuality}%
-      Water Quality: ${metricValue.waterQuality}%
-      Humidity: ${metricValue.humidity}%
-      Biodiversity: ${metricValue.biodiversity}%
-      Deforestation: ${metricValue.deforestation}%
-    `);
+    setIsChatOpen(true); // Abre o chat
+  };
+
+  // Função para fechar o chat
+  const handleCloseChat = () => {
+    setIsChatOpen(false); // Fecha o chat
+  };
+
+  // Função para enviar mensagem para a IA
+  const handleSendMessage = async () => {
+    if (!userMessage) return;
+
+    setLoading(true);
+
+    // Adiciona a mensagem do usuário ao histórico
+    setChatHistory([...chatHistory, { sender: 'user', message: userMessage }]);
+
+    // Simula uma chamada para a IA "Gemini" (substitua pela sua lógica)
+    try {
+      const response = await fetch('SUA_URL_DO_BACKEND_OU_API', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer SUA_CHAVE_API`, // Substitua pela sua chave API
+        },
+        body: JSON.stringify({ message: userMessage, model: 'gemini-chat' }),
+      });
+
+      const data = await response.json();
+      setChatHistory([...chatHistory, { sender: 'user', message: userMessage }, { sender: 'ia', message: data.reply }]);
+      setUserMessage('');
+    } catch (error) {
+      console.error('Erro ao se comunicar com a IA:', error);
+    }
+
+    setLoading(false);
   };
 
   // Define os valores mínimo e máximo do slider conforme a métrica
@@ -80,7 +112,7 @@ const Sidebar = () => {
             : `${selectedMetric}: ${metricValue[selectedMetric]}${suffix}`}
         </Typography>
         <Slider
-          sx={{fontFamily: 'Gloria Hallelujah, cursive'}}      
+          sx={{ fontFamily: 'Gloria Hallelujah, cursive' }}
           value={metricValue[selectedMetric]}
           onChange={handleSliderChange}
           min={min}
@@ -100,6 +132,49 @@ const Sidebar = () => {
       >
         Execute
       </Button>
+
+      {/* Pop-up centralizado */}
+      {isChatOpen && (
+        <div className="popup-overlay">
+          <div className="chat-popup">
+            <div className="chat-header">
+              <h2>Interação com a IA Gemini</h2>
+              <Button onClick={handleCloseChat} variant="contained" color="error">
+                Fechar
+              </Button>
+            </div>
+
+            {/* Histórico de mensagens */}
+            <div className="chat-history">
+              {chatHistory.map((chat, index) => (
+                <div key={index} className={chat.sender === 'user' ? 'user-message' : 'ia-message'}>
+                  <strong>{chat.sender === 'user' ? 'Você' : 'Gemini'}:</strong> {chat.message}
+                </div>
+              ))}
+            </div>
+
+            {/* Input e botão de enviar mensagem alinhados */}
+            <div className="input-container" style={{ display: 'flex', alignItems: 'center' }}>
+              <input
+                type="text"
+                value={userMessage}
+                onChange={(e) => setUserMessage(e.target.value)}
+                placeholder="Digite sua mensagem"
+                style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #e0e0e0', outline: 'none', fontSize: '16px' }}
+              />
+              <Button
+                onClick={handleSendMessage}
+                disabled={loading}
+                variant="contained"
+                color="primary"
+                sx={{ marginLeft: 1, height: '100%' }}
+              >
+                {loading ? 'Enviando...' : 'Enviar'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
