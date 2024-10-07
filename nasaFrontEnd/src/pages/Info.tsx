@@ -11,6 +11,7 @@ import oceanImage from './../assets/oceano.jpeg';
 import coralImage from './../assets/coral.jpeg';
 import 'leaflet/dist/leaflet.css';
 import EcosystemProfile from '../components/EcosystemProfile';
+import Navbar from '../components/Navbar';
 
 
 const ecosystems = [
@@ -20,7 +21,7 @@ const ecosystems = [
         description: 'Tundras are cold, dry regions with frozen soil and limited vegetation. They help regulate the global climate and store large amounts of carbon in the soil. They affect temperate forests and oceans due to their impact on the global climate.',
     },
     {
-        name: 'Savannahs',
+        name: 'Savannas',
         image: savannahImage,
         description: 'Savannahs are open areas with grasses and few trees, located in warm regions. They are habitats for large mammals and influence prairies and deserts, especially with changes in the rainfall regime.',
     },
@@ -48,22 +49,13 @@ const ecosystems = [
         name: 'Mangroves',
         image: mangroveImage,
         description: 'Mangroves are coastal forests that grow in salt or brackish water. They protect coastlines from erosion and are nurseries for many marine species. They influence coral reefs and oceans with their nutrients.',
-    },
-    {
-        name: 'Coral Reefs',
-        image: coralImage,
-        description: 'Coral reefs are underwater formations made by corals, hosting a large diversity of marine life. They protect coastlines from erosion and affect mangroves and oceans with their biodiversity.',
-    },
-    {
-        name: 'Oceans',
-        image: oceanImage,
-        description: 'Oceans cover more than 70% of the Earth, regulate the global climate, and produce most of the oxygen we breathe. They influence coral reefs, mangroves, and tropical forests by transporting nutrients and heat.',
-    },
+    }
 ];
 
 function Info() {
   return (
     <div className="Info">
+        <Navbar />
         {ecosystems.map((item) => (
           <EcosystemProfile 
             className={`ecosystem-profile ${item.name.replace(/\s+/g, '')}`} 

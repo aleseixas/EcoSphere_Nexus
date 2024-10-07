@@ -1,7 +1,7 @@
 /* Sidebar styling */
 .sidebar {
-  width: 30vw;
-  min-width: 200px;
+  width: 20vw;
+  min-width: 100px;
   font-family: 'Gloria Hallelujah', cursive;
   height: 100vh;
   background-color: rgba(34, 47, 62, 0.95);
@@ -26,9 +26,9 @@
 .dropdown-container label {
   color: #ecf0f1;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   display: block;
-  font-size: 1.2em;
+  font-size: 0.9em;
 }
 
 .execute-button{
@@ -40,12 +40,12 @@
 .dropdown-container select {
   font-family: 'Gloria Hallelujah', cursive;
   width: 100%;
-  padding: 12px;
+  padding: 5px;
   background-color: #34495e;
   color: white;
   border: 1px solid #7f8c8d;
   border-radius: 8px;
-  font-size: 1.1em;
+  font-size: 1em;
   margin-bottom: 20px;
 }
 .popup-overlay {

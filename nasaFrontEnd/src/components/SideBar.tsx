@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import { Slider, Typography, Box, Button } from '@mui/material';
 import './Sidebar.css'; // Manter o estilo do sidebar
+import axios from 'axios';
 
-const Sidebar = () => {
+interface SidebarProps {
+  biome: string;
+  dangerLevel: number;
+  onClose: () => void;
+  onFetchData: (data: { [key: string]: number }) => void; // Função para atualizar o perigo dos biomas
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ biome, dangerLevel, onClose, onFetchData }) => {
   const [selectedMetric, setSelectedMetric] = useState('temperature');
   const [metricValue, setMetricValue] = useState({
     temperature: 20,
@@ -17,6 +25,42 @@ const Sidebar = () => {
   const [chatHistory, setChatHistory] = useState<{ sender: string, message: string }[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const fetchData = async (attributeToBeAltered: string, newValue: number, ecosystemName: string, numYears = 15) => {
+    if (attributeToBeAltered != 'temperature'){
+      newValue = newValue / 100;
+    }
+    console.log(attributeToBeAltered);
+    console.log(newValue);
+    console.log(ecosystemName);
+    console.log(numYears);
+    try {
+      const response = await axios.get('https://apidocker2-902862667412.us-central1.run.app', {
+        params: {
+          numYears,
+          newValue,
+          attributeToBeAltered,
+          ecosystemName,
+        },
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        }
+      });
+  
+      // Retorna os dados recebidos da API
+      return response.data;
+    } catch (error) {
+      console.error('Error to get message of Alert.');
+      return null;
+    }
+  };
+
+  const handleExecute = async () => {
+    const data = await fetchData(selectedMetric, metricValue[selectedMetric], biome);
+    if (data) {
+      onFetchData(data); // Atualiza o perigo dos biomas com a resposta da API
+    }
+  };
+
   // Função para atualizar o valor da métrica
   const handleSliderChange = (event: Event, value: number | number[]) => {
     setMetricValue({
@@ -25,10 +69,6 @@ const Sidebar = () => {
     });
   };
 
-  // Função para abrir o chat quando o botão "EXECUTE" for clicado
-  const handleExecute = () => {
-    setIsChatOpen(true); // Abre o chat
-  };
 
   // Função para fechar o chat
   const handleCloseChat = () => {
@@ -85,9 +125,9 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <h2>🌍 Environmental Monitor</h2>
+      <h3>{biome}</h3>
+      <h3>🌍 Environmental Monitor</h3>
 
-      {/* Dropdown para selecionar a métrica */}
       <div className="dropdown-container">
         <label htmlFor="metric">Select Metric:</label>
         <select
@@ -104,9 +144,8 @@ const Sidebar = () => {
         </select>
       </div>
 
-      {/* Slider do MUI */}
       <Box className="slider-container" sx={{ width: '100%' }}>
-        <Typography gutterBottom>    
+        <Typography gutterBottom>
           {selectedMetric === 'temperature'
             ? `🌡️ Temperature: ${metricValue[selectedMetric]}${suffix}`
             : `${selectedMetric}: ${metricValue[selectedMetric]}${suffix}`}
@@ -118,11 +157,10 @@ const Sidebar = () => {
           min={min}
           max={max}
           aria-labelledby="input-slider"
-          valueLabelDisplay="auto" /* Exibe o valor ao lado do thumb */
+          valueLabelDisplay="auto"
         />
       </Box>
 
-      {/* Botão de execução */}
       <Button
         variant="contained"
         color="success"
