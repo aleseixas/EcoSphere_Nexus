@@ -40,10 +40,10 @@ const Sidebar = () => {
     if (!userMessage) return;
 
     setLoading(true);
-    
+
     // Adiciona a mensagem do usuário ao histórico
     setChatHistory([...chatHistory, { sender: 'user', message: userMessage }]);
-    
+
     // Simula uma chamada para a IA "Gemini" (substitua pela sua lógica)
     try {
       const response = await fetch('SUA_URL_DO_BACKEND_OU_API', {
@@ -153,16 +153,25 @@ const Sidebar = () => {
               ))}
             </div>
 
-            {/* Input para o usuário digitar sua mensagem */}
-            <input
-              type="text"
-              value={userMessage}
-              onChange={(e) => setUserMessage(e.target.value)}
-              placeholder="Digite sua mensagem"
-            />
-            <Button onClick={handleSendMessage} disabled={loading}>
-              {loading ? 'Enviando...' : 'Enviar'}
-            </Button>
+            {/* Input e botão de enviar mensagem alinhados */}
+            <div className="input-container" style={{ display: 'flex', alignItems: 'center' }}>
+              <input
+                type="text"
+                value={userMessage}
+                onChange={(e) => setUserMessage(e.target.value)}
+                placeholder="Digite sua mensagem"
+                style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #e0e0e0', outline: 'none', fontSize: '16px' }}
+              />
+              <Button
+                onClick={handleSendMessage}
+                disabled={loading}
+                variant="contained"
+                color="primary"
+                sx={{ marginLeft: 1, height: '100%' }}
+              >
+                {loading ? 'Enviando...' : 'Enviar'}
+              </Button>
+            </div>
           </div>
         </div>
       )}
